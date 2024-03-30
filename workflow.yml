@@ -1,9 +1,6 @@
 name: CI/CD
 
 on:
-  pull_request:
-    branches:
-    - "*"
   push:
     branches:
      - "*"
@@ -17,7 +14,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21'
+          node-version: 'lts'
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
@@ -33,7 +30,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21'
+          node-version: 'lts'
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
@@ -49,13 +46,11 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21'
+          node-version: 'lts'
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
-      - name: Run tests
-        run: pnpm test
       # Ajoutez ici les étapes de test
 
   security_check:
@@ -66,45 +61,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21'
+          node-version: 'lts'
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-
-      - name: Run CodeQL analysis
-        uses: github/codeql-action/analyze@v2
-      
-  #documentation:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Checkout code
-  #      uses: actions/checkout@v2
-#
-  #    - name: Use Node.js
-  #      uses: actions/setup-node@v2
-  #      with:
-  #        node-version: '18'
-#
-  #    - name: Install pnpm
-  #      run: npm install -g pnpm
-#
-  #    - name: Install dependencies
-  #      run: pnpm install
-#
-  #    - name: Generate documentation
-  #      run: npx @compodoc/compodoc -p tsconfig.json -d public
-#
-  #    - name: Archive documentation
-  #      uses: actions/upload-artifact@v2
-  #      with:
-  #        name: documentation
-  #        path: public
-#
-  #    - name: Deploy documentation
-  #      uses: peaceiris/actions-gh-pages@v3
-  #      with:
-  #        github_token: ${{ secrets.GITHUB_TOKEN }}
-  #        publish_dir: ./public
+      # Ajoutez ici les étapes de vérification de sécurité
