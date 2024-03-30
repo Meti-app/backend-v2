@@ -3,7 +3,7 @@ name: Pre-Testing
 on:
   push:
     branches:
-      - main
+      - '*'
 
 jobs:
   lint:

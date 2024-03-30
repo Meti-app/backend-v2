@@ -3,8 +3,7 @@ name: Test
 on:
   push:
     branches:
-      - main
-      - develop
+      - '*'
 
 jobs:
   test:
@@ -15,31 +14,23 @@ jobs:
     #    alias: localhost
 
     steps:
+      
       - name: Checkout code
         uses: actions/checkout@v2
-
-      # Install dbmate and apply migrations
-     # - name: Install dbmate and apply migrations
-     #   run: |
-     #     git clone $MIGRATIONS_REPO_URL
-     #     cd db-manager
-     #     ls
-     #     curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64
-     #     chmod +x /usr/local/bin/dbmate
-     #     make migrate
-     #     cd ..
-
-      # Install project dependencies
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts'
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install dependencies
-        run: yarn install
-
-      # Run unit tests
-      - name: Run unit tests
-        run: yarn test
-
+        run: pnpm install
+      - name: Run test
+        run: pnpm test
       # Generate code coverage report
       - name: Generate code coverage report
-        run: yarn test:cov
+        run: pnpm test:cov
 
       # Upload code coverage artifacts
       - name: Upload code coverage artifacts
