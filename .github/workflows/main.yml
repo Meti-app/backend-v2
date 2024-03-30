@@ -77,7 +77,7 @@ jobs:
       - name: Run CodeQL analysis
         uses: github/codeql-action/analyze@v1
       
-  documentation:
+  ddocumentation:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -102,3 +102,9 @@ jobs:
         with:
           name: documentation
           path: public
+
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
