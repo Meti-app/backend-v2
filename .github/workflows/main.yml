@@ -72,10 +72,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
 
       - name: Run CodeQL analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
       
   ddocumentation:
     runs-on: ubuntu-latest
