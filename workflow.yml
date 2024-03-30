@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre_testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Include pre-testing steps
+        uses: ./.github/workflows/pre_testing.yml
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Include testing steps
+        uses: ./.github/workflows/test.yml
+
+  security_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Include security check steps
+        uses: ./.github/workflows/security_check.yml
+

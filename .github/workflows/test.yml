@@ -1,0 +1,58 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    #services:
+    #  postgres:
+    #    image: postgres:latest
+    #    alias: localhost
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install dbmate and apply migrations
+     # - name: Install dbmate and apply migrations
+     #   run: |
+     #     git clone $MIGRATIONS_REPO_URL
+     #     cd db-manager
+     #     ls
+     #     curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64
+     #     chmod +x /usr/local/bin/dbmate
+     #     make migrate
+     #     cd ..
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: yarn install
+
+      # Run unit tests
+      - name: Run unit tests
+        run: yarn test
+
+      # Generate code coverage report
+      - name: Generate code coverage report
+        run: yarn test:cov
+
+      # Upload code coverage artifacts
+      - name: Upload code coverage artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage/
+      
+      # Set the coverage percentage as an output
+      - name: Set coverage output
+        id: coverage
+        run: |
+          coverage=$(awk '/^All files[\s\S]*?(\d+\.\d+%)/ { print $1 }' coverage/summary.txt)
+          echo "::set-output name=coverage::$coverage"
+
